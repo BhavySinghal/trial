@@ -1,0 +1,6 @@
+<<<<<<< HEAD
+allow system_server lirc_device:chr_file rw_file_perms;
+allow system_server persist_file:dir read;
+=======
+allow system_server lirc_device:chr_file { read write open };
+>>>>>>> f33c985... kenzo: Update some file to M

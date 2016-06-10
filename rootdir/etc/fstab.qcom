@@ -1,0 +1,32 @@
+# Android fstab file.
+# The filesystem that contains the filesystem checker binary (typically /system) cannot
+# specify MF_CHECK, and must come before any filesystems that do specify MF_CHECK
+#<src>                                              <mnt_point>  <type>  <mnt_flags and options>                                                        <fs_mgr_flags>
+
+/dev/block/bootdevice/by-name/system                /system      ext4    ro,barrier=1                                                                   wait
+/dev/block/bootdevice/by-name/userdata              /data        ext4    rw,nosuid,nodev,noatime,nodiratime,noauto_da_alloc,nobarrier                   wait,check,formattable,encryptable=footer,length=-16384
+/dev/block/bootdevice/by-name/cache                 /cache       ext4    rw,nosuid,nodev,noatime,nodiratime,barrier=1,data=ordered                      wait,check,formattable
+/dev/block/bootdevice/by-name/modem                 /firmware    vfat    ro,shortname=lower,dmask=222,fmask=333,context=u:object_r:firmware_file:s0     wait
+/dev/block/bootdevice/by-name/persist               /persist     ext4    rw,nosuid,nodev,barrier=1                                                      wait
+/dev/block/bootdevice/by-name/config                /frp         emmc    defaults                                                                       defaults
+
+<<<<<<< HEAD
+/dev/block/bootdevice/by-name/boot                  /boot        emmc    defaults                                                                       recoveryonly
+/dev/block/bootdevice/by-name/recovery              /recovery    emmc    defaults                                                                       recoveryonly
+
+# SDCard
+/devices/soc.0/7864900.sdhci/mmc_host*              auto         auto    defaults                                                                       voldmanaged=sdcard1:auto,encryptable=userdata
+/devices/platform/msm_hsusb_host/usb*               auto         auto    defaults                                                                       voldmanaged=usb:auto
+=======
+#<src>                                                <mnt_point>  <type>  <mnt_flags and options>                     <fs_mgr_flags>
+/dev/block/bootdevice/by-name/boot         /boot      emmc    defaults                                defaults
+/dev/block/bootdevice/by-name/recovery         /recovery      emmc    defaults                                defaults
+/dev/block/bootdevice/by-name/system         /system      ext4    ro,barrier=1,discard                                wait
+/dev/block/bootdevice/by-name/userdata       /data        ext4    nosuid,nodev,barrier=1,noauto_da_alloc,discard      wait,check,encryptable=footer
+/dev/block/bootdevice/by-name/cust      /cust             ext4    nosuid,nodev,barrier=1                              wait,check
+/dev/block/bootdevice/by-name/cache       /cache        ext4    nosuid,nodev,barrier=1,noauto_da_alloc,discard      wait,check
+/devices/soc.0/7864900.sdhci/mmc_host*        /storage/sdcard1   vfat    nosuid,nodev         wait,voldmanaged=sdcard1:auto,noemulatedsd,encryptable=footer
+/dev/block/zram0             none         swap    defaults zramsize=536870912
+/dev/block/bootdevice/by-name/config         /frp  emmc    defaults                                            defaults
+/devices/platform/msm_hsusb*                  /storage/usbotg    vfat    nosuid,nodev         wait,voldmanaged=usbotg:auto,encryptable=footer
+>>>>>>> f33c985... kenzo: Update some file to M
